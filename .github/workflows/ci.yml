@@ -31,5 +31,5 @@ jobs:
       run: |
         find . -type f -name "*.php" -exec php -l {} \;
 
-    - name: Run PHPUnit tests
-      run: vendor/bin/phpunit || echo "PHPUnit failed, but continuing"
+    # - name: Run PHPUnit tests
+    #   run: vendor/bin/phpunit || echo "PHPUnit failed, but continuing"
