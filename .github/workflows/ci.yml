@@ -2,25 +2,34 @@ name: PHP CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.2  # ✅ Make sure your dependencies support this
+        extensions: mbstring, xml, ctype, intl, curl, dom
 
-      - name: Install dependencies
-        run: composer install
+    - name: Validate composer.json and composer.lock
+      run: composer validate
 
-      - name: Make PHPUnit executable
-        run: chmod +x vendor/bin/phpunit
+    - name: Install dependencies
+      run: composer install --no-progress --no-suggest --prefer-dist
 
-      - name: Run tests
-        run: vendor/bin/phpunit
+    - name: Run PHP Linter
+      run: |
+        find . -type f -name "*.php" -exec php -l {} \;
+
+    - name: Run PHPUnit tests
+      run: vendor/bin/phpunit
