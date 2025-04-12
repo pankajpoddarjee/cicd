@@ -23,11 +23,8 @@ jobs:
     - name: Validate composer.json and composer.lock
       run: composer validate
 
-    - name: Install dependencies
+    - name: Install dependencies (debug)
       run: composer install -vvv --no-interaction --prefer-dist
 
     - name: Run PHP Linter
       run: find . -type f -name "*.php" -exec php -l {} \;
-
-    # - name: Run PHPUnit tests
-    #   run: vendor/bin/phpunit
