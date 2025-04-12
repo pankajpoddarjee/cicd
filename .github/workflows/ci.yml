@@ -3,8 +3,6 @@ name: PHP CI
 on:
   push:
     branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
 
 jobs:
   build:
@@ -17,11 +15,9 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
-          extensions: mbstring, bcmath, intl
-          coverage: none
 
-      - name: Install Dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
+      - name: Install dependencies
+        run: composer install
 
-      - name: Run Tests
+      - name: Run tests
         run: vendor/bin/phpunit
