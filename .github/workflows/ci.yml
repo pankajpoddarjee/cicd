@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -18,18 +17,17 @@ jobs:
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: 8.2  # or your PHP version
+        php-version: 8.2
         extensions: mbstring, xml, ctype, intl, curl, dom
 
     - name: Validate composer.json and composer.lock
       run: composer validate
 
     - name: Install dependencies
-      run: composer install --no-progress --no-suggest --prefer-dist
+      run: composer install -vvv --no-interaction --prefer-dist
 
     - name: Run PHP Linter
-      run: |
-        find . -type f -name "*.php" -exec php -l {} \;
+      run: find . -type f -name "*.php" -exec php -l {} \;
 
     # - name: Run PHPUnit tests
-    #   run: vendor/bin/phpunit || echo "PHPUnit failed, but continuing"
+    #   run: vendor/bin/phpunit
